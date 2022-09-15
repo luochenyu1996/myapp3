@@ -17,9 +17,9 @@ import {Content} from "antd/es/layout/layout";
 import  './NewsSandBox.css'
 
 export default function NewsSandBox() {
-    console.log("路由测试")
 
     return (
+        // 需要继续学习一下 layout
         <Layout>
             <SideMenu/>
             <Layout className="site-layout">
