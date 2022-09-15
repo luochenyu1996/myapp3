@@ -61,7 +61,9 @@ export default function SideMenu() {
 
     //这个函数唯一的作用其实就是把数据封装 成对象
     function getItem(i_label, i_key, i_icon, i_children, i_pagepermission) {
-        if (checkPermission(i_pagepermission) && !i_children) {
+        // 在后端返回的数据中 可能存在 children:[] 的情况，这种情况会导致 没有子菜单的时候也会产生折叠标签
+        //  i_children.length===0 这个 判断解决了这个问题
+        if (checkPermission(i_pagepermission) && ( !i_children || i_children.length===0)) {
             return {
                 key: i_key,
                 label: i_label,
