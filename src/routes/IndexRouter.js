@@ -11,12 +11,11 @@ export default function IndexRouter() {
 
     return (
         <HashRouter>
-
             <Routes>
                 <Route path='/login' element={<Login/>}/>
-                <Route path='/' element={localStorage.getItem("token") ? <NewsSandBox/> : <Navigate to='/login' replace />}/>
+                {/*注意这里的匹配方式*/}
+                <Route path='/*' element={localStorage.getItem("token") ? <NewsSandBox/> : <Navigate to='/login' replace />}/>
             </Routes>
-
         </HashRouter>
     )
 }

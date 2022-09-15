@@ -17,6 +17,7 @@ import {Content} from "antd/es/layout/layout";
 import  './NewsSandBox.css'
 
 export default function NewsSandBox() {
+    console.log("路由测试")
 
     return (
         <Layout>
@@ -25,14 +26,15 @@ export default function NewsSandBox() {
                 <TopHeader/>
                 <Content  className="site-layout-background"  style={{margin:'24px 16px',padding:24,minHeight:280}}>
                     <Routes>
-                        <Route path="/home" component={Home}/>
-                        <Route path="/user-manage/list" component={UserList}/>
-                        <Route path="/right-manage/role/list" component={RoleList}/>
-                        <Route path="/right-manage/right/list" component={RightList}/>
+                        <Route path="/home" element={<Home/>}/>
+                        <Route path="/user-manage/list" element={<UserList/>}/>
+                        <Route path="/right-manage/role/list" element={<RoleList/>}/>
+                        <Route path="/right-manage/right/list" element={<RightList/>}/>
                         {/*redirect 没有加上exact 是模糊匹配*/}
                         <Route from="/" to="/home" exact/>
                         <Route paht="/"  element={<Navigate to="/home" replace/>  } />
-                        <Route path="*" component={NoPermission}/>
+                        {/* todo 路由匹配规则*/}
+                        {/*<Route path="*" element={<NoPermission/>}/>*/}
                     </Routes>
                 </Content>
             </Layout>

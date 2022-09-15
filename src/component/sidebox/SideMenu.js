@@ -1,6 +1,6 @@
 import {Layout, Menu} from 'antd';
 import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate, useParams,useMatch,useRoutes,useSearchParams} from 'react-router-dom'
+import {  useNavigate, } from 'react-router-dom'
 import axios from "axios";
 import './index.css'
 
@@ -10,26 +10,26 @@ import {keyboard} from "@testing-library/user-event/dist/keyboard";
 import {replaceBehavior} from "@testing-library/user-event/dist/keyboard/plugins";
 
 
-const {Header, Sider, Content} = Layout;
+const { Sider, } = Layout;
 export default function SideMenu() {
 
     const [collapsed, setCollapsed] = useState(false);
     const [menu, setMenu] = useState([])
     const navigate = useNavigate();
-    //
-    console.log("输出测试")
-    // var useParams1 = useParams();
-    // var location1 = useLocation();
-    var navigateFunction = useNavigate();
-    console.log(navigateFunction)
 
-    console.log("输出测试")
+    // console.log("输出测试")
+    // // var useParams1 = useParams();
+    // // var location1 = useLocation();
+    // var navigateFunction = useNavigate();
+    // console.log(navigateFunction)
+    // console.log("输出测试")
 
 
     // 进行数据请求
     useEffect(() => {
         axios.get("https://3eb13b15-6b17-438d-9792-a9e4b7489bf5.mock.pstmn.io/sidemenu").then((res) => {
             setMenu(res.data)
+            console.log(res.data)
         })
     }, [])
 
