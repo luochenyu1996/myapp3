@@ -1,18 +1,38 @@
 import {Layout, Menu} from 'antd';
 import React, {useEffect, useState} from 'react';
-import {useNavigate,} from 'react-router-dom'
+import {Route, useNavigate,} from 'react-router-dom'
 import axios from "axios";
 import './index.css'
 
-// todo 思考一下没有权限的页面怎么不显示
 
 // todo 图标的引入
 import {AppstoreOutlined, ContainerOutlined, DesktopOutlined, PieChartOutlined,} from '@ant-design/icons';
 import {keyboard} from "@testing-library/user-event/dist/keyboard";
 import {replaceBehavior} from "@testing-library/user-event/dist/keyboard/plugins";
+import UserList from "../../view/sandbox/user-manage/UserList";
+import RoleList from "../../view/sandbox/right-magnage/RoleList";
+import RightList from "../../view/sandbox/right-magnage/RightList";
+
+const {Sider} = Layout;
 
 
-const {Sider,} = Layout;
+//  后端没有处理头像对对应的数据关系，由前端进行处理
+const iconList = {
+    //
+    "/home": <DesktopOutlined/>,
+
+    "/user-manage": <DesktopOutlined/>,
+    "/user-manage/list": <DesktopOutlined/>,
+    "/user-manage/delete": <DesktopOutlined/>,
+    "/user-manage/update": <DesktopOutlined/>,
+    "/user-manage/add": <DesktopOutlined/>,
+
+    "/right-manage": <DesktopOutlined/>,
+    "/right-manage/role/list": <DesktopOutlined/>,
+    "/right-manage/right/list": <DesktopOutlined/>
+}
+
+
 export default function SideMenu() {
 
     const [collapsed, setCollapsed] = useState(false);
@@ -28,6 +48,7 @@ export default function SideMenu() {
     }, [])
 
 
+    //检测返回回来的权限字段。说明： 有些菜单 没有权限字符串  那么这个时候默认为显示
     function checkPermission(pagePermission) {
         if (pagePermission === undefined) {
             return true
@@ -40,8 +61,6 @@ export default function SideMenu() {
 
     //这个函数唯一的作用其实就是把数据封装 成对象
     function getItem(i_label, i_key, i_icon, i_children, i_pagepermission) {
-        // console.log(i_label, i_key, i_icon, i_children)
-        console.log(i_pagepermission)
         if (checkPermission(i_pagepermission) && !i_children) {
             return {
                 key: i_key,
@@ -54,15 +73,14 @@ export default function SideMenu() {
                 key: i_key,
                 label: i_label,
                 icon: i_icon,
-                children: i_children.map(index => getItem(index.title, index.key, index.icon, index.children))
+                children: i_children.map(index => getItem(index.title, index.key, iconList[index.key] , index.children))
             }
     }
 
     // 对getItem函数进一步封装, 把请求数据封装成antd接收的对象
     function listObj(lists) {
         return lists.map(index => {
-                console.log(index)
-                return getItem(index.title, index.key, index.icon, index.children, index.pagepermisson)
+                return getItem(index.title, index.key, iconList[index.key] , index.children, index.pagepermisson)
             }
         )
     }
